@@ -5,7 +5,7 @@ class Client:
     
     def __init__(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__sock.connect(("54.244.152.11", 36666))
+        self.__sock.connect(("54.214.135.159", 36666))
         print "Client initialization completed: Conected to Server."
     
     def sendrecv(self, message):
@@ -20,8 +20,8 @@ class Client:
     
 if __name__ == "__main__":
     
-    totalnumber = 100
-    times = 100
+    totalnumber = 5000
+    times = 5000
     c_dict = {}
     for i in range(1, (totalnumber / 2) + 1):
         reg_message = "R#Client{0}#Client{1}".format(i, (i + totalnumber / 2))
