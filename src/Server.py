@@ -15,6 +15,7 @@ devicenumber_index = {}
 class Server:
     
     def __init__(self, ip, port):
+        self.__running = True
         self.__ip = ip
         self.__port = port
         self.__sock1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +29,7 @@ class Server:
         
     def serve(self):
         print "The server is serving..."
-        while(self.__inputs):
+        while(self.__inputs and self.__running):
             print "server waiting for request..."
             readable, writable, exceptional = select.select(self.__inputs, self.__outputs, self.__inputs)
             print "accepted."
@@ -185,11 +186,19 @@ class Server:
         devicelist[devicename][devlist_isalive] = False
         # May include another timer to indicate when to clear the long-dead device record
        
+    def shutdown(self):
+        self.__running = False
+        dsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        dsock.connect(("localhost", 36666))
+        dsock.send("down")
 
 if __name__ == "__main__":
       
     mserver = Server("localhost", 36666)    
     print "Server serving...."
-    mserver.serve()
+    try:
+        mserver.serve()
+    except KeyboardInterrupt as e:
+        mserver.shutdown()
+        print "Over"
     
-    print "Over"

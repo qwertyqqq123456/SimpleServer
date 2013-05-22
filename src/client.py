@@ -5,7 +5,7 @@ class Client:
     
     def __init__(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__sock.connect(("localhost", 36666))
+        self.__sock.connect(("54.244.152.11", 36666))
         print "Client initialization completed: Conected to Server."
     
     def sendrecv(self, message):
